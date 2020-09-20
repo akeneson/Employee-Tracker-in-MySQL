@@ -6,6 +6,7 @@ USE departmentDB;
 
 CREATE TABLE department (
   id INT NOT NULL,
+  -- to hold department name
   name VARCHAR(30) NULL,
   PRIMARY KEY (id)
 );
