@@ -4,6 +4,7 @@ var inquirer = require("inquirer");
 
 var connection = mysql.createConnection({
     host:"localhost",
+    port: 3306,
     user:"root",
     password:"",
     database:"employeeDB"
@@ -18,7 +19,7 @@ connection.connect(function(err){
 function runInquirer(){
     inquirer.prompt({
         name: "Main",
-        type: "list",
+        type: "rawlist",
         message: "Main Menu: Please choose from the following: ",
         choices: [
             "Add departments, roles, or employee",
@@ -30,10 +31,10 @@ function runInquirer(){
             "View the total utilized budget of a department",
         ]
     }).then(function(answer){
+        console.log(answer);
         switch(answer.action){
             case "Add departments, roles, or employee":
                 addOption();
-                break;
             case "View departments, roles, or employee":
                 viewOption();
                 break;
@@ -56,3 +57,33 @@ function runInquirer(){
     })
 }
 
+function addOption(){
+    console.log("addOption function called");
+    inquirer.
+        prompt({
+            name:"addOption",
+            type: "choices",
+            message: "Which would you like to add?",
+            choices: [
+                "Add department",
+                "Add role",
+                "Add employee"
+            ]            
+    })
+    .then (function(res){
+        console.log(res);
+        if (res == "Add department") {
+        inquirer.prompt({
+                name:"departmentName",
+                type:"input",
+                message: "What is the name of the new department?"
+            }).then(function(res){
+                console.log(res);
+                connection.query("INSERT INTO department SET ?", {name: res.name},
+                function(err, res){
+                    if(err) throw err;
+                });
+            });
+        }
+    });
+}
