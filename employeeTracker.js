@@ -80,7 +80,7 @@ function addOption(){
                 console.log("Add departments selected");
                 addDepartment();
                 break;
-            case "Add roles":
+            case "Add role":
                 console.log("Add roles selected");
                 addRoles();
                 break;
