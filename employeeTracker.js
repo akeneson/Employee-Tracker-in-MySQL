@@ -2,6 +2,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+
 var connection = mysql.createConnection({
     host:"localhost",
     port: 3306,
@@ -99,7 +100,7 @@ function addDepartment(){
     inquirer.prompt({
         type: "input",
         message: "Enter the name of the department: ",
-        name:"deptName"
+        name:"newDept"
     }).then(function(response){
         console.log(response);
         connection.query("INSERT INTO department SET ?", { Department_name: response.name },
@@ -108,7 +109,36 @@ function addDepartment(){
     });
     })
 }
-
+function addRoles(){
+    console.log("addRoles function called");
+    inquirer.prompt([
+    {
+        type: "input",
+        message: "Enter the title of the new role: ",
+        name:"newRole"
+    },
+    {
+        type: "input",
+        message: "Enter the salary of the new role: ",
+        name:"newSalary"
+    },
+    {
+        type: "input",
+        message: "Enter the department ID of the new role: ",
+        name: "newDeptID"
+    }
+    ]).then(function(response){
+        console.log(response);
+        connection.query("INSERT INTO roles SET ?", { 
+            title: newRole,
+            salary: newSalary,
+            department_ID: newDeptID
+         },
+        function(error,response){
+        if (error) throw error;
+    });
+    })
+}
 // function addEmployee(){
 //     console.log("addEmployee function called");
 //     inquirer.prompt([
