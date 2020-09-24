@@ -5,7 +5,7 @@ CREATE database employeeDB;
 USE employeeDB;
 
 CREATE TABLE employee (
-  employee_ID INT NOT NULL,
+  employee_ID INT NOT NULL AUTO_INCREMENT,
   First_name VARCHAR(30),
   Last_name VARCHAR(30),
 --  to hold reference to role employee has
@@ -23,7 +23,7 @@ CREATE TABLE department (
 );
 
 CREATE TABLE roles (
-  role_ID INT NOT NULL,
+  role_ID INT NOT NULL AUTO_INCREMENT,
   -- to hold role title
   Title VARCHAR(30) NULL,
   -- to hold role salary

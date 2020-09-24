@@ -108,6 +108,7 @@ function addDepartment(){
         if (error) throw error;
     });
     })
+    
 }
 function addRoles(){
     console.log("addRoles function called");
@@ -130,51 +131,52 @@ function addRoles(){
     ]).then(function(response){
         console.log(response);
         connection.query("INSERT INTO roles SET ?", { 
-            title: newRole,
-            salary: newSalary,
-            department_ID: newDeptID
+            title: response.newRole,
+            salary: response.newSalary,
+            department_ID: response.newDeptID
          },
         function(error,response){
         if (error) throw error;
     });
     })
+   
 }
-// function addEmployee(){
-//     console.log("addEmployee function called");
-//     inquirer.prompt([
-//     {
-//         type: "input",
-//         message: "Enter the first name of the employee: ",
-//         name:"firstName"
-//     },
-//     {
-//         type: "input",
-//         message: "Enter the first name of the employee: ",
-//         name:"lastName"
-//     },
-//     {
-//         type: "list",
-//         message: "What's is the employee's title?",
-//         name: "employeeTitle",
-//         choices: showRoles
-//     },
-//     {
-//         type: "list",
-//         message: "Who is the employee's manager?",
-//         name: "employeeManager",
-//         choices: showManger
-//     }
-//     ]).then(function(response){
-//         console.log(response);
-//         connection.query("INSERT INTO employee SET ?", { 
-//             First_name: response.first_name,
-//             Last_name: response.last_name,
-//             Fole_id: response.employeeTitle,
-//             Manager_id: response.employeeManager 
-//          },
-//         function(error,response){
-//         if (error) throw error;
-//     });
-//     })
-//     runInquirer();
-// }
+function addEmployee(){
+    console.log("addEmployee function called");
+    inquirer.prompt([
+    {
+        type: "input",
+        message: "Enter the first name of the employee: ",
+        name:"firstName"
+    },
+    {
+        type: "input",
+        message: "Enter the first name of the employee: ",
+        name:"lastName"
+    },
+    {
+        type: "list",
+        message: "What's is the employee's title?",
+        name: "employeeTitle",
+        choices: showRoles
+    },
+    {
+        type: "list",
+        message: "Who is the employee's manager?",
+        name: "employeeManager",
+        choices: showManger
+    }
+    ]).then(function(response){
+        console.log(response);
+        connection.query("INSERT INTO employee SET ?", { 
+            First_name: response.first_name,
+            Last_name: response.last_name,
+            Fole_id: response.employeeTitle,
+            Manager_id: response.employeeManager 
+         },
+        function(error,response){
+        if (error) throw error;
+    });
+    })
+    
+}
