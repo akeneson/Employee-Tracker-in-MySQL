@@ -59,7 +59,7 @@ function runInquirer(){
         }
     })
 }
-
+// ------------------------ADD OPTION---------------------------
 function addOption(){
     console.log("addOption function called");
     inquirer.
@@ -94,7 +94,7 @@ function addOption(){
         }
     });
 }
-
+//[ADD DEPARTMENT]
 function addDepartment(){
     console.log("addDepartment function called");
     inquirer.prompt({
@@ -110,6 +110,7 @@ function addDepartment(){
     })
     
 }
+//[ADD ROLES]
 function addRoles(){
     console.log("addRoles function called");
     inquirer.prompt([
@@ -141,6 +142,7 @@ function addRoles(){
     })
    
 }
+// [ADD EMPLOYEES]
 function addEmployee(){
     console.log("addEmployee function called");
     inquirer.prompt([
@@ -178,5 +180,53 @@ function addEmployee(){
         if (error) throw error;
     });
     })
-    
+}
+// Not working
+function showRoles(){
+    connection.query("SELECT * from role", function(error,res){
+        console.table(res);
+    })
+}
+// Not working
+function showManager(){
+    connection.query("SELECT * from role", function(error,res){
+        console.table(res);
+    })
+}
+
+// ---------------------VIEW OPTION --------------------------
+
+function viewOption(){
+    console.log("viewOption function called");
+    inquirer.
+        prompt({
+            name: "action",
+            type: "rawlist",
+            message: "Which would you like to view?",
+            choices: [
+                "View department",
+                "View role",
+                "View employee"
+            ]            
+    })
+    .then (function(answer){
+        console.log(answer);
+        switch(answer.action){
+            case "View department":
+                console.log("View departments selected");
+                viewDepartment();
+                break;
+            case "View role":
+                console.log("View roles selected");
+                viewRoles();
+                break;
+            case "View employee":
+                console.log("View employee selected");
+                viewEmployee();
+                break;
+            case "Return to previous menu":
+                runInquirer();
+                break;
+        }
+    });
 }
