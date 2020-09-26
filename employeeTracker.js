@@ -284,7 +284,7 @@ function viewOption() {
             }
         });
 }
-// Not working
+
 function viewDepartment() {
     connection.query("SELECT * FROM department", function (error, res) {
         console.table(res);
@@ -292,7 +292,7 @@ function viewDepartment() {
     })
 }
 
-// Not working
+
 function viewRoles() {
     return connection.query("SELECT * FROM roles", function(error, res){
         console.table(res);
@@ -300,7 +300,6 @@ function viewRoles() {
     })
 }
 
-// Not working
 function viewEmployee() {
     return connection.query("SELECT * FROM employee", function(error, res){
         console.table(res);
@@ -309,7 +308,10 @@ function viewEmployee() {
 }
 
 // ----------------------UPDATE EMPLOYEE ROLE -----------------------
-function updateRole() {
+function updateRole(data) {
+    connection.query(`UPDATE employee SET role_id = ${data.title} WHERE id = ${data.employee_ID}`, function(error, res){
+        if (error) throw error;
+    },
     inquirer.prompt([
         {
             name: "name",
@@ -320,11 +322,12 @@ function updateRole() {
         {
             name: "roleID",
             type: "number",
-            message: "Enter new role ID: ",
+            message: "Enter new role ID: "
         }
     ]).then(function (response) {
         connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [response.role_id, response.name], function (error, data) {
             console.table(data);
         })
     })
+    )
 }
