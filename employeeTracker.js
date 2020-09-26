@@ -71,7 +71,8 @@ function addOption() {
             choices: [
                 "Add department",
                 "Add role",
-                "Add employee"
+                "Add employee",
+                "Return to main menu"
             ]
         })
         .then(function (answer) {
@@ -89,7 +90,7 @@ function addOption() {
                     console.log("Add employee selected");
                     addEmployee();
                     break;
-                case "Return to previous menu":
+                case "Return to main menu":
                     runInquirer();
                     break;
             }
@@ -176,6 +177,7 @@ function addEmployee() {
             name: result.title
         }));
         console.log("Roles", roles);
+        // const getManagerList = getManager(); 
         // [query managers for list]
     // connection.query("SELECT * FROM employee", function (error, response) {
     //     if (error) throw error;
@@ -183,7 +185,7 @@ function addEmployee() {
     //         id: item.employee_ID,
     //         name: item.manager_id
     //     }));
-    //     console.log("Managers", manager);
+        // console.log("Managers", getManagerList);
     inquirer.prompt([
         {
             type: "input",
@@ -197,21 +199,27 @@ function addEmployee() {
         },
         {
             type: "list",
-            message: "What's is the employee's title?",
+            message: "What's is the new employee's title?",
             name: "employeeTitle",
             choices: roles.map(roleItem => ({ name: roleItem.name, value: roleItem.id }))
         },
-            // {
-            //     type: "list",
-            //     message: "Who is the employee's manager?",
-            //     name: "employeeManager",
-            //     choices: manager.map(managerItem => ({ name: managerItem.name, value: managerItem.id }))
-            // }
+        {
+            type: "input",
+            message: "What is the new employee's manager ID?",
+            name: "manager"
+        }
+        // {
+        //     type: "list",
+        //     message: "Who is the employee's manager?",
+        //     name: "employeeManager",
+        //     choices: {getManagerList}
+        // }
             ]).then(function (response) {
                 connection.query("INSERT INTO employee SET ?", {
-                    first_name: response.first_name,
-                    last_name: response.last_name,
+                    first_name: response.firstName,
+                    last_name: response.lastName,
                     role_id: response.employeeTitle,
+                    manager_id: response.manager
                     // manager_id: response.employeeManager
                 },
                     function (error, response) {
@@ -224,7 +232,21 @@ function addEmployee() {
     // })
 }
 
+// [query managers for list]
+function getManager() {
+    connection.query("SELECT * FROM employee", function (error, response) {
+        if (error) throw error;
+        manager = response.map(item => ({
+            id: item.role_id,
+            name: item.manager_id
+        }));
+        // console.log("Managers", manager);
+        const managerInfo = manager.map(managerItem => ({ name: managerItem.name, value: managerItem.id }));
+        console.log("getManager function called: ", managerInfo);
+        return this.managerInfo;
+    })
 
+}
 // ---------------------VIEW OPTION --------------------------
 
 function viewOption() {
@@ -237,7 +259,8 @@ function viewOption() {
             choices: [
                 "View department",
                 "View roles",
-                "View employee"
+                "View employee",
+                "Return to main menu"
             ]
         })
         .then(function (answer) {
@@ -255,7 +278,7 @@ function viewOption() {
                     console.log("View employee selected");
                     viewEmployee();
                     break;
-                case "Return to previous menu":
+                case "Return to main menu":
                     runInquirer();
                     break;
             }
