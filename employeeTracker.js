@@ -309,7 +309,6 @@ function viewEmployee() {
 }
 
 // ----------------------UPDATE EMPLOYEE ROLE -----------------------
-
 function updateRole() {
     inquirer.prompt([
         {
